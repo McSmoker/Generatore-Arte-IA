@@ -3,6 +3,7 @@ from PIL import Image
 from io import BytesIO
 import streamlit as st
 import translators.server as tts
+from streamlit_disqus import st_disqus
 import base64
 
 def Generate(request):
@@ -42,6 +43,20 @@ request = st.text_input("Sono in grado di disegnare tutto ciò che vuoi, se non 
 with st.expander("Esempi di input da dare 🎨"):
 	st.markdown("🤖Esempi : \n- Una bicletta sulla Luna \n- Un gatto che gioca a calcio \n- Una mela dentro una galassia \n- Una borsa Rossa per eventi eleganti  \n- Un leone che suona il violino  \n- Un'auto che corre su una strada di ghiaccio  \n- Un topo che gioca a golf  \n- Un computer che dipinge quadri  \n- Una farfalla che gioca a scacchi  \n- Un uomo che cammina su un tappeto volante  \n 🤗 Non scordati di condividere gli output e il nostro sito con i tuoi amici o colleghi 🤗")
 
+with st.expander("Consigli per ottenere risultati migliori 🎨"):
+	st.markdown("🤖Consigli : \n- Usa parole chiave per ottenere risultati migliori \
+		\n- Inserisci la parolola 'Foto' per immagini simili a Foto \
+		\n- Inserisci la parolola 'Foto 4K HD' per simili a Foto di alta qualità \
+		\n- Inserisci la parolola 'Disegno' per immagini simili a disegni \
+		\n- inserisci la parolola 'Design' per immagini simili a disegni di design \
+		\n- Inserisci la parolola 'Illustrazione' per immagini simili a illustrazioni \
+		\n- Inserisci la parolola 'Logo' per immagini simili a loghi \
+		\n- Inserisci la parolola 'Cartoon' per immagini simili a cartoni animati \
+		\n- Inserisci la parolola 'Animazione' per immagini simili a animazioni \
+		\n- Inserisci la parolola '3d' per immagini simili a 3d \
+		\n- Inserisci la parolola 'Grafica' per immagini simili a grafica \
+		\n 🤗 Non scordati di condividere gli output e il nostro sito con i tuoi amici o colleghi 🤗")
+
 cola , colb, colc = st.columns(3)
 
 
@@ -71,4 +86,5 @@ if colb.button("Disegna le mie immagini 🖌"):
 		else:
 			st.error("🤖Sembra che ci sia stato un errore, riprova più tardi🤖")
 
+st_disqus("Condividi-le-immagini-🤗")
 st.caption(" [© Intelligenza Artificiale Italia](https://www.intelligenzaartificialeitalia.net/)")
