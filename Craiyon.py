@@ -82,9 +82,10 @@ if colb.button("Disegna le mie immagini 🖌"):
 			st.info(" ☑️ Per scaricare le immagini clicca con il tasto destro del mouse e seleziona 'Salva immagine come...' ")
 			st.success("🤖 Ecco le tue immagini, non sono meravigliose? ")
 			st.warning("🤖 Se non ti piacciono, prova a cambiare input ")
+			st_disqus("Condividi-le-immagini")
 
 		else:
 			st.error("🤖Sembra che ci sia stato un errore, riprova più tardi🤖")
 
-st_disqus("Condividi-le-immagini")
+
 st.caption(" [© Intelligenza Artificiale Italia](https://www.intelligenzaartificialeitalia.net/)")
