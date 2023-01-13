@@ -86,5 +86,5 @@ if colb.button("Disegna le mie immagini 🖌"):
 		else:
 			st.error("🤖Sembra che ci sia stato un errore, riprova più tardi🤖")
 
-st_disqus("Condividi-le-immagini-🤗")
+st_disqus("Condividi-le-immagini")
 st.caption(" [© Intelligenza Artificiale Italia](https://www.intelligenzaartificialeitalia.net/)")
