@@ -67,16 +67,8 @@ if colb.button("Disegna le mie immagini 🖌"):
 			st.info(" ☑️ Per scaricare le immagini clicca con il tasto destro del mouse e seleziona 'Salva immagine come...' ")
 			st.success("🤖 Ecco le tue immagini, non sono meravigliose? ")
 			st.warning("🤖 Se non ti piacciono, prova a cambiare input ")
-			#appendi il nuovo input nel file input.txt
-			with open("input.txt", "a") as file:
-				file.write(new_request+"\n")
+
 		else:
 			st.error("🤖Sembra che ci sia stato un errore, riprova più tardi🤖")
 
-with st.expander("👨‍👨‍👦‍👦 Lasciati ispirare dagli altri utenti"):
-	#leggi il file input.txt riga per riga e fai un markdown 
-	st.text("👨‍👨‍👦‍👦 Ecco alcuni esempi di input che altri utenti hanno dato:")
-	with open("input.txt", "r") as file:
-		for line in file:
-			st.markdown("\n- "+line)
 st.caption(" [© Intelligenza Artificiale Italia](https://www.intelligenzaartificialeitalia.net/)")
