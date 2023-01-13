@@ -12,6 +12,21 @@ def Generate(request):
 
 generator = Craiyon()
 st.title("🤖Genera Immagini uniche con l' I.A.📸")
+
+st.set_page_config(page_title="Genera Immagini uniche online by I.A. Italia", page_icon="📈", layout='wide', initial_sidebar_state='auto')
+
+st.markdown("<center><h1>🤖Genera Immagini uniche con l'I.A.📸<small><br> Powered by INTELLIGENZAARTIFICIALEITALIA.NET </small></h1>", unsafe_allow_html=True)
+st.write('<p style="text-align: center;font-size:15px;" > <bold>Divertiti a generare immagini uniche e irrecreabili, il tutto gratis, online e utilizzando input direttamente in italiano.<bold>  </bold><p><br>', unsafe_allow_html=True)
+
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
 request = st.text_input("Sono in grado di disegnare tutto ciò che vuoi, se non ci credi provami🖌🤖","Dimmi solo cosa disegnare e lo  farò!")
 cola , colb, colc = st.columns(3)
 
