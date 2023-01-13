@@ -36,6 +36,8 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 request = st.text_input("Sono in grado di disegnare tutto ciò che vuoi, se non ci credi provami🖌🤖","Dimmi solo cosa disegnare e lo  farò!")
 cola , colb, colc = st.columns(3)
 
+st.markdown("<center><small>🤖Esempi : [Una bicletta sulla Luna] , [Un gatto chr gioca a calcio] , [Una mela dentro una galassia], il tuo unico limite è la fantasia</small></center><br>", unsafe_allow_html=True)
+
 if colb.button("Disegna le mie immagini 🖌"):
 	with st.spinner("🧑‍🎨 Attendi un attimo stiamo rapendo diversi artisti... ( circa 40 secondi ) 🧑‍🎨"):
 		new_request = tts.google(request, from_language="it", to_language="en")
