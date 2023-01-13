@@ -40,7 +40,7 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 request = st.text_input("Sono in grado di disegnare tutto ciò che vuoi, se non ci credi provami🖌🤖","Un leone che suona il violino")
 
 with st.expander("Esempi di input da dare 🎨"):
-	st.markdown("🤖Esempi : \n- Una bicletta sulla Luna \n- Un gatto che gioca a calcio \n- Una mela dentro una galassia \n- Una borsa Rossa per eventi eleganti  \n-Un leone che suona il violino  \n-Un'auto che corre su una strada di ghiaccio  \n-Un topo che gioca a golf  \n-Un computer che dipinge quadri  \n-Una farfalla che gioca a scacchi  \n-Un uomo che cammina su un tappeto volante  \n 🤗 Non scordati di condividere gli output e il nostro sito con i tuoi amici o colleghi 🤗")
+	st.markdown("🤖Esempi : \n- Una bicletta sulla Luna \n- Un gatto che gioca a calcio \n- Una mela dentro una galassia \n- Una borsa Rossa per eventi eleganti  \n- Un leone che suona il violino  \n- Un'auto che corre su una strada di ghiaccio  \n- Un topo che gioca a golf  \n- Un computer che dipinge quadri  \n- Una farfalla che gioca a scacchi  \n- Un uomo che cammina su un tappeto volante  \n 🤗 Non scordati di condividere gli output e il nostro sito con i tuoi amici o colleghi 🤗")
 
 cola , colb, colc = st.columns(3)
 
