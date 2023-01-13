@@ -24,7 +24,7 @@ hide_st_style = """
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
-st.set_page_config(page_title="Genera Immagini uniche online by I.A. Italia", page_icon="📈")
+
 request = st.text_input("Sono in grado di disegnare tutto ciò che vuoi, se non ci credi provami🖌🤖","Dimmi solo cosa disegnare e lo  farò!")
 cola , colb, colc = st.columns(3)
 
