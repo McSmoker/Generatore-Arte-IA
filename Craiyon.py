@@ -20,6 +20,12 @@ hide_st_style = """
             #MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
             header {visibility: hidden;}
+            .css-12oz5g7 {
+		    flex: 1 1 0%;
+		    width: 100%;
+		    padding: 0.3rem;
+		    max-width: 46rem;
+            }
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
