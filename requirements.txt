@@ -1,3 +1,4 @@
+translators
 altair==4.2.0
 attrs==22.2.0
 blinker==1.5
