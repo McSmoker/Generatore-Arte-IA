@@ -73,7 +73,7 @@ if colb.button("Disegna le mie immagini 🖌"):
 		else:
 			st.error("🤖Sembra che ci sia stato un errore, riprova più tardi🤖")
 
-with st.epander("👨‍👨‍👦‍👦 Lasciati ispirare dagli altri utenti"):
+with st.expander("👨‍👨‍👦‍👦 Lasciati ispirare dagli altri utenti"):
 	#leggi il file input.txt riga per riga e fai un markdown 
 	st.text("👨‍👨‍👦‍👦 Ecco alcuni esempi di input che altri utenti hanno dato:")
 	with open("input.txt", "r") as file:
