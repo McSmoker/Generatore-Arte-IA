@@ -11,10 +11,11 @@ def Generate(request):
     return images
 
 generator = Craiyon()
-st.title("🤖 Genera Immagini uniche e irricreabili 📸")
+st.title("🤖Genera Immagini uniche con l' I.A.📸")
+request = st.text_input("Sono in grado di disegnare tutto ciò che vuoi, se non ci credi provami🖌🤖","Dimmi solo cosa disegnare e lo
 cola , colb, colc = st.columns(3)
-request = st.text_input("Sono in grado di disegnare tutto ciò che vuoi, se non ci credi provami🖌🤖","Dimmi solo cosa disegnare e lo farò!")
-if colb.button("🖌 Disegna le mie immagini 🖌"):
+ farò!")
+if colb.button("Disegna le mie immagini 🖌"):
 	with st.spinner("🧑‍🎨 Attendi un attimo stiamo rapendo diversi artisti... ( circa 40 secondi ) 🧑‍🎨"):
 		new_request = tts.google(request, from_language="it", to_language="en")
 		image_files = Generate(new_request)
