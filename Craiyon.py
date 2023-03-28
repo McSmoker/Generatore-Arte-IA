@@ -1,106 +1,10 @@
-
-import streamlit as st
-st.set_page_config(
-    page_title="🧠🤖🇮🇹 - Beta ChatBOT Intelligenza Artificiale Italia",
-    page_icon=":robot:",
-    layout="wide"
-)
-
-st.markdown('<style> \
-    .css-1x8cf1d { \
-    display: inline-flex; \
-    -webkit-box-align: center; \
-    align-items: center; \
-    -webkit-box-pack: center; \
-    justify-content: center; \
-    font-weight: 400; \
-    padding: 0.25rem 0.75rem; \
-    border-radius: 0.25rem; \
-    margin: 0px; \
-    line-height: 1.6; \
-    color: inherit; \
-    width: 100%; \
-    height: 100%; \
-    user-select: none; \
-    background-color: rgb(255, 255, 255); \
-    border: 1px solid rgba(49, 51, 63, 0.2); \
-    } \
-    .css-12w0qpk {\
-    transform: translateY(45%); \
-    } <style>', unsafe_allow_html=True)
-
-
-"""
-### Il chatBOT di [Intelligenza Artificiale Italia](https://www.intelligenzaartificialeitalia.net/)🧠🤖🇮🇹 
-"""
-
-
-from selenium import webdriver
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
-from streamlit_chat_media import message
 from craiyon import Craiyon
 from PIL import Image 
 from io import BytesIO
+import streamlit as st
 import translators.server as tts
+from streamlit_disqus import st_disqus
 import base64
-import time 
-
-
-
-@st.cache_resource(show_spinner=False)
-def get_driver():
-  with st.spinner(" 💡 Il nostro chatBOT sta caricando, potrebbe volerci qualche secondo ⏳"):
-    options = webdriver.ChromeOptions()
-    options.add_argument('--disable-gpu')
-    options.add_argument('--headless')
-    options.add_argument('--no-sandbox')      
-    options.add_argument('--disable-dev-shm-usage')    
-    options.add_argument("--disable-features=NetworkService")
-    options.add_argument("--window-size=1920x1080")
-    options.add_argument("--disable-features=VizDisplayCompositor")    
-    options.add_argument("'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36'")
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-    driver.get('https://deepai.org/machine-learning-model/text-generator')
-  return driver
-
-driver = get_driver()
-
-# crea lo stack di messaggi
-if 'user' not in st.session_state:
-    st.session_state['user'] = []
-
-if 'bot' not in st.session_state:
-    st.session_state['bot'] = []
-    # mostra il messaggio di benvenuto
-    st.session_state['bot'].append('Ciao, sono il chatBOT di Intelligenza Artificiale Italia 🧠🤖🇮🇹, puoi chiedermi qualunque cosa riguardo l\'Intelligenza Artificiale, ti risponderò il prima possibile 🚀')
-
-
-# aggiunge il messaggio in chat
-def add_message(content, sender):
-  if sender == 'bot':
-      st.session_state['bot'].append(content)
-  else:
-      st.session_state['user'].append(content)
-      
-          
-def show_messages_alto():
-    # stampa i messaggi in modo che il più nuovo sia sempre in alto
-    # inoltre il bot può inviare più messaggi di risposta per ogni messaggio dell'utente
-    i = len(st.session_state['bot']) - 1
-    l = len(st.session_state['user']) - 1
-    if i == 0:
-        message(st.session_state['bot'][i], key=str(i))
-    else:
-        while i > 0:
-            message(st.session_state['bot'][i], key=str(i), allow_html=True)
-            if l >= i:
-                message(st.session_state['user'][i-1], is_user=True, key=str(i) + '_user')
-            i -= 1
-    
 
 
 def Generate(request):
@@ -112,61 +16,71 @@ def Generate(request):
 	except:
 		return "Error"
 
-st.write("")
+generator = Craiyon()
 
-col1, col2 = st.columns([3, 1])
-prompt = col1.text_input("🤔 Puoi chiedergli qualunque cosa...")
+st.set_page_config(layout="wide")
 
-if col2.button("Chiedi 🚀") and prompt != "" and driver.page_source != "":
-# se il prompt inizia con /img 
-    if prompt.startswith("/img"):
-        with st.spinner(" 💡 Il nostro chatBOT sta creando 9 immagini, potrebbe volerci qualche secondo ⏳"):
-            try :
-                prompt = prompt[4:]
-                new_request = tts.google(prompt, from_language="it", to_language="en")
-                image_files = Generate(new_request)
-                if image_files != "Error":
-                    i = 0
-                    while i < 9:
-                        image = Image.open(BytesIO(image_files[i]))
-                        html_img = f'<img src="data:image/png;base64,{base64.b64encode(image.tobytes()).decode()}" alt="image" style="width: 100%; height: 100%; object-fit: contain;"/>'
-                        add_message(html_img, 'bot')
-                        i += 1
-                else:
-                    add_message("🤖 Ops, qualcosa è andato storto, riprova più tardi", 'bot')
-            except Exception as e:
-                add_message("🤖 Ops, qualcosa è andato storto, riprova più tardi , " + str(e), 'bot')
-                print(e)   
-    else: 
-        with st.spinner(" 💡 Il nostro chatBOT sta scrivendo, potrebbe volerci qualche secondo ⏳"):
-            try:
-                textarea = driver.find_element(By.CLASS_NAME, "model-input-text-input")
-                textarea.send_keys(prompt)
-                time.sleep(0.05)
-                button = driver.find_element(By.ID, "modelSubmitButton")
-                button.click()
+st.markdown("<center><h1>🤖Genera Immagini uniche con l'I.A.📸<small><br> Powered by INTELLIGENZAARTIFICIALEITALIA.NET </small></h1>", unsafe_allow_html=True)
+st.write('<p style="text-align: center;font-size:15px;" > <bold>Divertiti a generare immagini uniche e irrecreabili, il tutto gratis, online e utilizzando input direttamente in italiano. Il tuo unico limite è la fantasia </bold><p><br>', unsafe_allow_html=True)
 
-                result = ""
-                while result == "":
-                    result = driver.find_element(By.CLASS_NAME, "try-it-result-area").text
-                    time.sleep(0.05)
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 
-                add_message(prompt, 'user')
-                add_message(result, 'bot')
-                
-                textarea = driver.find_element(By.CLASS_NAME, "model-input-text-input")
-                textarea.clear()
-                time.sleep(0.05)
-                
-            except Exception as e:
-                
-                print(e)
-                textarea = driver.find_element(By.CLASS_NAME, "model-input-text-input")
-                textarea.clear()
-                add_message(prompt, 'user')
-                add_message("Riprova a farmi la domanda", 'bot')
-            
-print(st.session_state['bot'])
-show_messages_alto()
+request = st.text_input("Sono in grado di disegnare tutto ciò che vuoi, se non ci credi provami🖌🤖","Un leone che suona il violino")
 
+with st.expander("Esempi di input da dare 🎨"):
+	st.markdown("🤖Esempi : \n- Una bicletta sulla Luna \n- Un gatto che gioca a calcio \n- Una mela dentro una galassia \n- Una borsa Rossa per eventi eleganti  \n- Un leone che suona il violino  \n- Un'auto che corre su una strada di ghiaccio  \n- Un topo che gioca a golf  \n- Un computer che dipinge quadri  \n- Una farfalla che gioca a scacchi  \n- Un uomo che cammina su un tappeto volante  \n 🤗 Non scordati di condividere gli output e il nostro sito con i tuoi amici o colleghi 🤗")
+
+with st.expander("Consigli per ottenere risultati migliori 🎨"):
+	st.markdown("🤖Consigli : \n- Usa parole chiave per ottenere risultati migliori \
+		\n- Inserisci la parolola 'Foto' per immagini simili a Foto \
+		\n- Inserisci la parolola 'Foto 4K HD' per simili a Foto di alta qualità \
+		\n- Inserisci la parolola 'Disegno' per immagini simili a disegni \
+		\n- inserisci la parolola 'Design' per immagini simili a disegni di design \
+		\n- Inserisci la parolola 'Illustrazione' per immagini simili a illustrazioni \
+		\n- Inserisci la parolola 'Logo' per immagini simili a loghi \
+		\n- Inserisci la parolola 'Cartoon' per immagini simili a cartoni animati \
+		\n- Inserisci la parolola 'Animazione' per immagini simili a animazioni \
+		\n- Inserisci la parolola '3d' per immagini simili a 3d \
+		\n- Inserisci la parolola 'Grafica' per immagini simili a grafica \
+		\n 🤗 Non scordati di condividere gli output e il nostro sito con i tuoi amici o colleghi 🤗")
+
+cola , colb, colc = st.columns(3)
+
+
+if colb.button("Disegna le mie immagini 🖌"):
+	with st.spinner("🧑‍🎨 Attendi un attimo ⏳ stiamo rapendo diversi artisti... ( circa 40 secondi ) 🧑‍🎨"):
+		new_request = tts.google(request, from_language="it", to_language="en")
+		image_files = Generate(new_request)
+		if image_files != "Error":
+			col1, col2, col3 = st.columns(3)
+			with col1:
+				st.image(Image.open(BytesIO(base64.decodebytes(image_files[0].encode("utf-8")))))
+				st.image(Image.open(BytesIO(base64.decodebytes(image_files[1].encode("utf-8")))))
+				st.image(Image.open(BytesIO(base64.decodebytes(image_files[2].encode("utf-8")))))
+			with col2:
+				st.image(Image.open(BytesIO(base64.decodebytes(image_files[3].encode("utf-8")))))
+				st.image(Image.open(BytesIO(base64.decodebytes(image_files[4].encode("utf-8")))))
+				st.image(Image.open(BytesIO(base64.decodebytes(image_files[5].encode("utf-8")))))
+			with col3:
+				st.image(Image.open(BytesIO(base64.decodebytes(image_files[6].encode("utf-8")))))
+				st.image(Image.open(BytesIO(base64.decodebytes(image_files[7].encode("utf-8")))))
+				st.image(Image.open(BytesIO(base64.decodebytes(image_files[8].encode("utf-8")))))
+			st.balloons()
+			st.info(" ☑️ Per scaricare le immagini clicca con il tasto destro del mouse e seleziona 'Salva immagine come...' ")
+			st.success("🤖 Ecco le tue immagini, non sono meravigliose? ")
+			st.warning("🤖 Se non ti piacciono, prova a cambiare input ")
+			st_disqus("Condividi-le-immagini")
+
+		else:
+			st.error("🤖Sembra che ci sia stato un errore, riprova più tardi🤖")
+
+
+st.caption(" [© Intelligenza Artificiale Italia](https://www.intelligenzaartificialeitalia.net/)")
